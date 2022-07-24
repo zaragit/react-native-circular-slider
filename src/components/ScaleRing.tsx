@@ -2,11 +2,11 @@ import React from 'react';
 import {TAU} from 'react-native-redash';
 
 import ScaleLine from './ScaleLine';
-import {setClockwise} from '../utils/fp';
-import {useScalePropsContext} from '../context/GaugeContext';
+import {setClockwise} from '../utils/worklets';
+import {useScaleOptionsContext} from '../context/GaugeContext';
 
 export default function ScaleRing() {
-  const {total, unit, clockwise} = useScalePropsContext();
+  const {total, unit, clockwise} = useScaleOptionsContext();
 
   return (
     <>

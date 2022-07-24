@@ -2,14 +2,14 @@ import Animated, {SharedValue, useAnimatedStyle} from 'react-native-reanimated';
 import {Vector} from 'react-native-redash';
 import React from 'react';
 
-import {useScalePropsContext} from '../context/GaugeContext';
+import {useScaleOptionsContext} from '../context/GaugeContext';
 
 interface CursorOverlayProps {
   position: SharedValue<Vector>;
 }
 
 const CursorOverlay = ({position}: CursorOverlayProps) => {
-  const {width} = useScalePropsContext();
+  const {width} = useScaleOptionsContext();
 
   const style = useAnimatedStyle(() => {
     const {x, y} = position.value;

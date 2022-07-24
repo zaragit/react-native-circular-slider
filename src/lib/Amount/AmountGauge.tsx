@@ -1,9 +1,9 @@
 import React, {useCallback} from 'react';
 import {PI, TAU} from 'react-native-redash';
 
-import Amount from '../components/Amount';
-import Gauge, {GaugeProps} from './Gauge';
-import {normalize, setClockwise} from '../utils/fp';
+import {Amount} from './index';
+import Gauge, {GaugeProps} from '../Gauge';
+import {normalize, setClockwise} from '../../utils/worklets';
 
 export interface AmountGaugeProps extends GaugeProps {
   amount: number;
@@ -14,13 +14,13 @@ export interface AmountGaugeProps extends GaugeProps {
 
 export default function AmountGauge({
   size,
-  scaleProps = {},
+  scaleOptions = {},
   pointerColor = '#FFA500',
   scaleGaugeColor = '#FFE5B4',
   amount,
   onChangeAmount,
 }: AmountGaugeProps) {
-  const {clockwise = false, total = 100} = scaleProps;
+  const {clockwise = false, total = 100} = scaleOptions;
 
   const amount2Theta = useCallback(
     (_amount: number) => {
@@ -46,7 +46,7 @@ export default function AmountGauge({
     <Gauge
       {...{
         size,
-        scaleProps,
+        scaleOptions,
         toTheta: amount2Theta,
         fromTheta: theta2Amount,
       }}>

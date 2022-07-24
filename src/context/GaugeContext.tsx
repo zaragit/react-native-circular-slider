@@ -8,7 +8,7 @@ export interface GaugeContext {
   size: SharedValue<number>;
   r: SharedValue<number>;
   center: SharedValue<Vector>;
-  scaleProps: {
+  scaleOptions: {
     unit: number;
     total: number;
     clockwise: boolean;
@@ -34,7 +34,7 @@ export interface GaugeContextProviderProps extends GaugeProps {
 
 export default function GaugeContextProvider({
   size,
-  scaleProps = {},
+  scaleOptions = {},
   children,
 }: GaugeContextProviderProps) {
   const {
@@ -50,7 +50,7 @@ export default function GaugeContextProvider({
     showText = false,
     textSize = 10,
     textColor = '#191919',
-  } = scaleProps;
+  } = scaleOptions;
 
   const derivedSize = useDerivedValue(() => size, [size]);
   const derivedScaleWidth = useDerivedValue(
@@ -71,7 +71,7 @@ export default function GaugeContextProvider({
         size: derivedSize,
         r: derivedR,
         center: derivedCenter,
-        scaleProps: {
+        scaleOptions: {
           unit,
           total,
           clockwise,
@@ -101,7 +101,7 @@ export function useGaugeContext() {
   return context;
 }
 
-export function useScalePropsContext() {
+export function useScaleOptionsContext() {
   const context = useGaugeContext();
-  return context.scaleProps;
+  return context.scaleOptions;
 }

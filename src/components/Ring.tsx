@@ -6,8 +6,8 @@ import {useGaugeContext} from '../context/GaugeContext';
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 export default function Ring() {
-  const {r, center, scaleProps} = useGaugeContext();
-  const {width, color} = scaleProps;
+  const {r, center, scaleOptions} = useGaugeContext();
+  const {width, color} = scaleOptions;
 
   const animatedProps = useAnimatedProps(() => {
     return {

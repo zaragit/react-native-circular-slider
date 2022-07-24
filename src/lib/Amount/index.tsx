@@ -12,14 +12,14 @@ import Animated, {
   useSharedValue,
 } from 'react-native-reanimated';
 
-import Bar from './Bar';
-import Ring from './Ring';
-import Canvas from './Canvas';
-import Pointer from './Pointer';
-import ScaleRing from './ScaleRing';
-import CursorOverlay from './CursorOverlay';
-import {useGaugeContext} from '../context/GaugeContext';
-import {normalize, setClockwise} from '../utils/fp';
+import Ring from '../../components/Ring';
+import Canvas from '../../components/Canvas';
+import Pointer from '../../components/Pointer';
+import ScaleRing from '../../components/ScaleRing';
+import FilledGauge from '../../components/FilledGauge';
+import CursorOverlay from '../../components/CursorOverlay';
+import {useGaugeContext} from '../../context/GaugeContext';
+import {containedInSquare, normalize, setClockwise} from '../../utils/worklets';
 
 export interface AmountProps {
   amount: number;
@@ -28,14 +28,14 @@ export interface AmountProps {
   onChangeAmount?: (amount: number) => void;
 }
 
-export default function Amount({
+export function Amount({
   amount,
   pointerColor,
   scaleGaugeColor,
   onChangeAmount,
 }: AmountProps) {
-  const {r, center, scaleProps} = useGaugeContext();
-  const {total, clockwise} = scaleProps;
+  const {r, center, scaleOptions} = useGaugeContext();
+  const {total, width, clockwise} = scaleOptions;
 
   const amount2Theta = useCallback(
     (_amount: number) => {
@@ -58,9 +58,6 @@ export default function Amount({
   );
 
   const zeroTheta = useSharedValue(amount2Theta(0));
-  const zeroPosition = useDerivedValue(() =>
-    polar2Canvas({theta: zeroTheta.value, radius: r.value}, center.value),
-  );
 
   const theta = useSharedValue(amount2Theta(amount));
   const position = useDerivedValue(() =>
@@ -69,16 +66,22 @@ export default function Amount({
 
   const onGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
-    {offset: number}
+    {offset: number | null}
   >({
     onStart({x, y}, context) {
-      context.offset = canvas2Polar({x, y}, center.value).theta;
+      if (containedInSquare({x, y}, position.value, width.value)) {
+        context.offset = canvas2Polar({x, y}, center.value).theta;
+      } else {
+        context.offset = null;
+      }
     },
     onActive({x, y}, context) {
-      const {theta: newTheta} = canvas2Polar({x, y}, center.value);
-      const delta = newTheta - context.offset;
-      theta.value = normalize(theta.value + delta);
-      context.offset = newTheta;
+      if (context.offset) {
+        const {theta: newTheta} = canvas2Polar({x, y}, center.value);
+        const delta = newTheta - context.offset;
+        theta.value = normalize(theta.value + delta);
+        context.offset = newTheta;
+      }
     },
     onEnd() {
       if (onChangeAmount) {
@@ -92,14 +95,12 @@ export default function Amount({
       <Canvas>
         <Ring />
         <ScaleRing />
-        <Bar
+        <FilledGauge
           color={scaleGaugeColor}
           startTheta={zeroTheta}
           endTheta={theta}
-          startPosition={zeroPosition}
-          endPosition={position}
         />
-        <Pointer position={position} color={pointerColor} />
+        <Pointer theta={theta} color={pointerColor} />
       </Canvas>
       <PanGestureHandler onGestureEvent={onGestureEvent}>
         <Animated.View style={StyleSheet.absoluteFill}>

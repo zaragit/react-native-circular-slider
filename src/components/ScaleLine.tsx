@@ -1,12 +1,9 @@
 import React from 'react';
-import {Line, Text} from 'react-native-svg';
 import {polar2Canvas, Vector} from 'react-native-redash';
-import Animated, {useAnimatedProps} from 'react-native-reanimated';
+import {useAnimatedProps} from 'react-native-reanimated';
 
 import {useGaugeContext} from '../context/GaugeContext';
-
-const AnimatedLine = Animated.createAnimatedComponent(Line);
-const AnimatedText = Animated.createAnimatedComponent(Text);
+import {AnimatedLine, AnimatedText} from './Animated';
 
 export interface ScaleLine {
   theta: number;
@@ -25,8 +22,8 @@ const vector = (theta: number, radius: number, center: Vector) => {
 };
 
 export default function ScaleLine({theta, text}: ScaleLine) {
-  const {r, center, scaleProps} = useGaugeContext();
-  const {width, color, lineWidth, lineLength} = scaleProps;
+  const {r, center, scaleOptions} = useGaugeContext();
+  const {width, color, lineWidth, lineLength} = scaleOptions;
 
   const animatedLineProps = useAnimatedProps(() => {
     const v1 = vector(theta, r.value - width.value / 2, center.value);

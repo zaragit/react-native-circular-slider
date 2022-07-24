@@ -1,18 +1,26 @@
 import React from 'react';
-import Animated, {useAnimatedProps} from 'react-native-reanimated';
-import {Vector} from 'react-native-redash';
+import Animated, {
+  useAnimatedProps,
+  useDerivedValue,
+} from 'react-native-reanimated';
+import {polar2Canvas} from 'react-native-redash';
 import {Circle} from 'react-native-svg';
-import {useScalePropsContext} from '../context/GaugeContext';
+import {useGaugeContext, useScaleOptionsContext} from '../context/GaugeContext';
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
 export interface PointerProps {
   color: string;
-  position: Animated.SharedValue<Vector>;
+  theta: Animated.SharedValue<number>;
 }
 
-export default function Pointer({color, position}: PointerProps) {
-  const {width} = useScalePropsContext();
+export default function Pointer({color, theta}: PointerProps) {
+  const {r, center} = useGaugeContext();
+  const {width} = useScaleOptionsContext();
+
+  const position = useDerivedValue(() =>
+    polar2Canvas({theta: theta.value, radius: r.value}, center.value),
+  );
 
   const animatedProps = useAnimatedProps(() => {
     return {

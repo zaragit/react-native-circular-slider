@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import GaugeContextProvider from '../context/GaugeContext';
 
-export interface ScaleProps {
+export interface ScaleOptions {
   unit?: number;
   total?: number;
   clockwise?: boolean;
@@ -19,16 +19,16 @@ export interface ScaleProps {
 
 export interface GaugeProps {
   size: number;
-  scaleProps?: ScaleProps;
+  scaleOptions?: ScaleOptions;
   children?: React.ReactNode;
 }
 
-export default function Gauge({size, scaleProps, children}: GaugeProps) {
+export default function Gauge({size, scaleOptions, children}: GaugeProps) {
   return (
     <GaugeContextProvider
       {...{
         size,
-        scaleProps,
+        scaleOptions,
       }}>
       <View style={[styles.container, {width: size, height: size}]}>
         {children}

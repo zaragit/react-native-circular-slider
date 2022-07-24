@@ -36,7 +36,7 @@ yar add react-native-circular-gauge
 | ---- | ------------- | ------ | :------: | :-----: |
 | size | size of gauge | Number |   ⭕️    |         |
 
-#### Scale
+#### Scale Options
 
 | Name       | Description                                                   | Type    | Required |   Default   |
 | ---------- | ------------------------------------------------------------- | ------- | :------: | :---------: |
