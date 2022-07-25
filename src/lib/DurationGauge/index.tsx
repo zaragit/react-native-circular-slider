@@ -1,26 +1,26 @@
 import React, {useCallback} from 'react';
 import {PI, TAU} from 'react-native-redash';
 
-import {Amount} from './index';
+import {Duration} from './Duration';
 import Gauge, {GaugeProps} from '../Gauge';
 import {normalize, setClockwise} from '../../utils/worklets';
 
-export interface AmountGaugeProps extends GaugeProps {
-  amount: number;
+export interface DurationGaugeProps extends GaugeProps {
+  duration: {start: number; end: number};
   pointerColor?: string;
   scaleGaugeColor?: string;
-  onChangeAmount?: (amount: number) => void;
+  onChange?: (duration: {start: number; end: number}) => void;
 }
 
-export default function AmountGauge({
+export function DurationGauge({
   size,
   scaleOptions = {},
+  duration,
   pointerColor = '#FFA500',
   scaleGaugeColor = '#FFE5B4',
-  amount,
-  onChangeAmount,
-}: AmountGaugeProps) {
-  const {clockwise = false, total = 100} = scaleOptions;
+  onChange,
+}: DurationGaugeProps) {
+  const {clockwise = true, total = 100} = scaleOptions;
 
   const amount2Theta = useCallback(
     (_amount: number) => {
@@ -50,11 +50,11 @@ export default function AmountGauge({
         toTheta: amount2Theta,
         fromTheta: theta2Amount,
       }}>
-      <Amount
-        amount={amount}
+      <Duration
+        duration={duration}
+        onChange={onChange}
         pointerColor={pointerColor}
         scaleGaugeColor={scaleGaugeColor}
-        onChangeAmount={onChangeAmount}
       />
     </Gauge>
   );

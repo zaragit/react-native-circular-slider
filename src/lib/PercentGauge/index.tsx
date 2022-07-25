@@ -1,9 +1,9 @@
 import React, {useCallback} from 'react';
 import {PI, TAU} from 'react-native-redash';
 
+import {Percent} from './Percent';
 import Gauge, {GaugeProps} from '../Gauge';
 import {normalize} from '../../utils/worklets';
-import {Percent} from '.';
 
 export interface PercentGaugeProps extends GaugeProps {
   percents: number[];
@@ -12,7 +12,7 @@ export interface PercentGaugeProps extends GaugeProps {
   onChange?: (percents: number[]) => void;
 }
 
-export default function PercentGauge({
+export function PercentGauge({
   size,
   scaleOptions = {},
   percents,

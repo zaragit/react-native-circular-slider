@@ -2,8 +2,8 @@ import React from 'react';
 import {polar2Canvas, Vector} from 'react-native-redash';
 import {useAnimatedProps} from 'react-native-reanimated';
 
-import {useGaugeContext} from '../context/GaugeContext';
 import {AnimatedLine, AnimatedText} from './Animated';
+import {useGaugeContext} from '../context/GaugeContext';
 
 export interface ScaleLine {
   theta: number;
