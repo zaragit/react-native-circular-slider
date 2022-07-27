@@ -36,6 +36,10 @@ export default function SliderContextProvider({
 }: SliderContextProviderProps) {
   const {size, clockwise} = sliderOptions;
   const {width, color} = trackOptions;
+  const derivedTickMarkOptions = useDerivedValue(
+    () => tickMarkOptions,
+    [tickMarkOptions],
+  );
 
   const derivedSize = useDerivedValue(() => size, [size]);
   const derivedTrackWidth = useDerivedValue(
@@ -59,7 +63,7 @@ export default function SliderContextProvider({
         center: derivedCenter,
         trackWidth: derivedTrackWidth,
         trackColor: color,
-        tickMarkOptions,
+        tickMarkOptions: derivedTickMarkOptions.value,
       }}>
       {children}
     </SliderContext.Provider>

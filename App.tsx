@@ -20,16 +20,16 @@ export default function App() {
         amount={amount}
         onChange={setAmount}
         clockwise={clockwise}
-        tickMarkOptions={{show: true}}
+        tickMarkOptions={{show: true, total: 100, unit: 5}}
       />
-      <PercentSlider percents={percents} size={size} onChange={setPercents} />
+      {/* <PercentSlider percents={percents} size={size} onChange={setPercents} />
       <DurationSlider
         size={size}
         duration={duration}
         onChange={setDuration}
         clockwise={clockwise}
         tickMarkOptions={{show: true}}
-      />
+      /> */}
       <View style={{flexDirection: 'row'}}>
         {[200, 220, 240].map(s => (
           <Button key={s} title={String(s)} onPress={() => setSize(s)} />

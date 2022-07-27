@@ -1,19 +1,18 @@
-import React from 'react';
+import React, {memo} from 'react';
 import {Svg} from 'react-native-svg';
 import {StyleSheet} from 'react-native';
 import Animated, {useAnimatedProps} from 'react-native-reanimated';
 
-import {useSliderContext} from '../../context/SliderContext';
+import {SharedNumber} from '../../types';
 
 const AnimatedSvg = Animated.createAnimatedComponent(Svg);
 
 export interface CanvasProps {
+  size: SharedNumber;
   children?: React.ReactNode;
 }
 
-export function Canvas({children}: CanvasProps) {
-  const {size} = useSliderContext();
-
+export const Canvas = memo(({size, children}: CanvasProps) => {
   const animatedProps = useAnimatedProps(() => {
     return {
       width: size.value,
@@ -26,4 +25,4 @@ export function Canvas({children}: CanvasProps) {
       {children}
     </AnimatedSvg>
   );
-}
+});

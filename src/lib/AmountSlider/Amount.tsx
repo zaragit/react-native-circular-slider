@@ -50,22 +50,25 @@ export function Amount({
   const zeroTheta = useSharedValue(amount2Theta(0));
   const theta = useSharedValue(amount2Theta(amount));
 
-  const onGestureActive = ({x, y}: Vector, context: GestureContext) => {
-    'worklet';
-    if (context.target.value?.curr) {
-      const {theta: newTheta} = canvas2Polar({x, y}, center.value);
-      const delta = newTheta - context.offset;
-      theta.value = normalize(theta.value + delta);
-      context.offset = newTheta;
-    }
-  };
+  const onGestureActive = useCallback(
+    ({x, y}: Vector, context: GestureContext) => {
+      'worklet';
+      if (context.target.value?.curr) {
+        const {theta: newTheta} = canvas2Polar({x, y}, center.value);
+        const delta = newTheta - context.offset;
+        theta.value = normalize(theta.value + delta);
+        context.offset = newTheta;
+      }
+    },
+    [center.value, theta],
+  );
 
-  const onGestureEnd = () => {
+  const onGestureEnd = useCallback(() => {
     'worklet';
     if (onChange) {
       runOnJS(onChange)(theta2Amount(theta.value));
     }
-  };
+  }, [onChange, theta.value, theta2Amount]);
 
   return (
     <Container

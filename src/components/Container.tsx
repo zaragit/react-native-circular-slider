@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {useSharedValue} from 'react-native-reanimated';
 import {canvas2Polar, Vector} from 'react-native-redash';
 
@@ -21,32 +21,54 @@ export function Container({
   onGestureEnd,
   children,
 }: ContainerProps) {
-  const {center} = useSliderContext();
-  const {show} = useTickMarkContext();
+  const {size, r, center, clockwise, trackWidth} = useSliderContext();
+  const {show, total, unit, color, showText, thickness, length} =
+    useTickMarkContext();
 
   const target = useSharedValue<GestureThumbs | null>(null);
 
-  const onGestureStart = ({x, y}: Vector, context: GestureContext) => {
-    'worklet';
-    const {theta} = canvas2Polar({x, y}, center.value);
-    context.offset = theta;
-    context.target = target;
-  };
+  const onGestureStart = useCallback(
+    ({x, y}: Vector, context: GestureContext) => {
+      'worklet';
+      const {theta} = canvas2Polar({x, y}, center.value);
+      context.offset = theta;
+      context.target = target;
+    },
+    [center.value, target],
+  );
 
-  const _onGestureEnd = (vector: Vector, context: GestureContext) => {
-    'worklet';
-    target.value = null;
+  const _onGestureEnd = useCallback(
+    (vector: Vector, context: GestureContext) => {
+      'worklet';
+      target.value = null;
 
-    if (onGestureEnd) {
-      onGestureEnd(vector, context);
-    }
-  };
+      if (onGestureEnd) {
+        onGestureEnd(vector, context);
+      }
+    },
+    [onGestureEnd, target],
+  );
 
   return (
     <>
-      <Canvas>
+      <Canvas size={size}>
         <Track />
-        {show && <TickMark />}
+        {show && (
+          <TickMark
+            {...{
+              r,
+              center,
+              clockwise,
+              trackWidth,
+              total,
+              unit,
+              color,
+              showText,
+              thickness,
+              length,
+            }}
+          />
+        )}
         {children}
       </Canvas>
       <RGesture
