@@ -1,27 +1,23 @@
 import React from 'react';
-
-import Animated, {
-  useAnimatedProps,
-  useDerivedValue,
-} from 'react-native-reanimated';
 import {PI, polar2Canvas, TAU} from 'react-native-redash';
+import {useAnimatedProps, useDerivedValue} from 'react-native-reanimated';
 
-import Ring from './Ring';
+import {Track} from './Track';
 import {AnimatedPath} from './Animated';
-import {thetaBetweenStartAndEnd} from '../utils/worklets';
-import {useGaugeContext, useScaleOptionsContext} from '../context/GaugeContext';
+import {SharedNumber} from '../../types';
+import {thetaBetweenStartAndEnd} from '../../utils/worklets';
+import {useSliderContext} from '../../context/SliderContext';
 
 export interface FilledGaugeProps {
   color: string;
-  startTheta: Animated.SharedValue<number>;
-  endTheta: Animated.SharedValue<number>;
+  startTheta: SharedNumber;
+  endTheta: SharedNumber;
 }
 
-function FilledGauge({color, startTheta, endTheta}: FilledGaugeProps) {
-  const {r, center} = useGaugeContext();
-  const {clockwise, width} = useScaleOptionsContext();
+export function FilledGauge({color, startTheta, endTheta}: FilledGaugeProps) {
+  const {r, center, trackWidth, clockwise} = useSliderContext();
 
-  const position = (theta: Animated.SharedValue<number>) => {
+  const position = (theta: SharedNumber) => {
     'worklet';
     return () => {
       'worklet';
@@ -51,13 +47,13 @@ function FilledGauge({color, startTheta, endTheta}: FilledGaugeProps) {
 
     return {
       d,
-      strokeWidth: width.value,
+      strokeWidth: trackWidth.value,
     };
   }, [clockwise]);
   return (
     <>
       {isFullFilled ? (
-        <Ring />
+        <Track />
       ) : (
         <AnimatedPath
           data-testid="filled-gauge"
@@ -68,5 +64,3 @@ function FilledGauge({color, startTheta, endTheta}: FilledGaugeProps) {
     </>
   );
 }
-
-export default FilledGauge;

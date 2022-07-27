@@ -1,54 +1,47 @@
 import React from 'react';
-import {Pressable} from 'react-native';
+import {Vector} from 'react-native-redash';
+import {StyleSheet} from 'react-native';
+import {
+  PanGestureHandler,
+  PanGestureHandlerGestureEvent,
+} from 'react-native-gesture-handler';
 import Animated, {
   SharedValue,
-  useAnimatedStyle,
-  useDerivedValue,
+  useAnimatedGestureHandler,
 } from 'react-native-reanimated';
-import {polar2Canvas} from 'react-native-redash';
-import {useGaugeContext, useScaleOptionsContext} from '../context/GaugeContext';
 
-interface Props {
-  prevTheta?: SharedValue<number>;
-  currentTheta: SharedValue<number>;
-  nextTheta?: SharedValue<number>;
-  gestureTarget: SharedValue<{
-    prevTheta?: SharedValue<number>;
-    currentTheta: SharedValue<number>;
-    nextTheta?: SharedValue<number>;
-  } | null>;
+import {GestureThumbs} from '../types';
+
+export type GestureContext = {
+  offset: number;
+  target: SharedValue<GestureThumbs | null>;
+};
+
+export interface GestureProps {
+  onStart?: (vector: Vector, context: GestureContext) => void;
+  onActive?: (vector: Vector, context: GestureContext) => void;
+  onEnd?: (vector: Vector, context: GestureContext) => void;
+  children?: React.ReactNode;
 }
 
-function Gesture({prevTheta, currentTheta, nextTheta, gestureTarget}: Props) {
-  const {r, center} = useGaugeContext();
-  const {width} = useScaleOptionsContext();
-
-  const endPosition = useDerivedValue(
-    () =>
-      polar2Canvas({theta: currentTheta.value, radius: r.value}, center.value),
-    [currentTheta],
-  );
+export default function RGesture({
+  onStart,
+  onActive,
+  onEnd,
+  children,
+}: GestureProps) {
+  const onGestureEvent = useAnimatedGestureHandler<
+    PanGestureHandlerGestureEvent,
+    GestureContext
+  >({
+    onStart,
+    onActive,
+    onEnd,
+  });
 
   return (
-    <Pressable
-      onPressIn={() => {
-        gestureTarget.value = {
-          prevTheta,
-          currentTheta,
-          nextTheta,
-        };
-      }}>
-      <Animated.View
-        style={useAnimatedStyle(() => ({
-          position: 'absolute',
-          width: width.value,
-          height: width.value,
-          left: endPosition.value.x - width.value / 2,
-          top: endPosition.value.y - width.value / 2,
-        }))}
-      />
-    </Pressable>
+    <PanGestureHandler onGestureEvent={onGestureEvent}>
+      <Animated.View style={StyleSheet.absoluteFill}>{children}</Animated.View>
+    </PanGestureHandler>
   );
 }
-
-export default Gesture;

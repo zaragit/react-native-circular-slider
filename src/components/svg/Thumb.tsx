@@ -3,20 +3,21 @@ import Animated, {
   useAnimatedProps,
   useDerivedValue,
 } from 'react-native-reanimated';
-import {polar2Canvas} from 'react-native-redash';
 import {Circle} from 'react-native-svg';
-import {useGaugeContext, useScaleOptionsContext} from '../context/GaugeContext';
+import {polar2Canvas} from 'react-native-redash';
+
+import {SharedNumber} from '../../types';
+import {useSliderContext} from '../../context/SliderContext';
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
-export interface PointerProps {
+export interface ThumbProps {
   color: string;
-  theta: Animated.SharedValue<number>;
+  theta: SharedNumber;
 }
 
-export default function Pointer({color, theta}: PointerProps) {
-  const {r, center} = useGaugeContext();
-  const {width} = useScaleOptionsContext();
+export function Thumb({color, theta}: ThumbProps) {
+  const {r, center, trackWidth} = useSliderContext();
 
   const position = useDerivedValue(() =>
     polar2Canvas({theta: theta.value, radius: r.value}, center.value),
@@ -26,7 +27,7 @@ export default function Pointer({color, theta}: PointerProps) {
     return {
       cx: position.value.x,
       cy: position.value.y,
-      r: width.value / 2,
+      r: trackWidth.value / 2,
     };
   }, [position]);
 

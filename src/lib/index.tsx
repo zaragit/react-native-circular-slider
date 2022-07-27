@@ -1,3 +1,3 @@
-export * from './AmountGauge';
-export * from './PercentGauge';
-export * from './DurationGauge';
+export * from './AmountSlider';
+export * from './PercentSlider';
+export * from './DurationSlider';

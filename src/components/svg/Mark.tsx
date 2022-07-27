@@ -1,35 +1,27 @@
 import React from 'react';
-import {polar2Canvas, Vector} from 'react-native-redash';
 import {useAnimatedProps} from 'react-native-reanimated';
 
+import {
+  useSliderContext,
+  useTickMarkContext,
+} from '../../context/SliderContext';
+import {vector} from '../../utils/worklets';
 import {AnimatedLine, AnimatedText} from './Animated';
-import {useGaugeContext} from '../context/GaugeContext';
 
-export interface ScaleLine {
+export interface MarkProps {
   theta: number;
   text?: string;
 }
 
-const vector = (theta: number, radius: number, center: Vector) => {
-  'worklet';
-  return polar2Canvas(
-    {
-      theta,
-      radius,
-    },
-    center,
-  );
-};
-
-export default function ScaleLine({theta, text}: ScaleLine) {
-  const {r, center, scaleOptions} = useGaugeContext();
-  const {width, color, lineWidth, lineLength} = scaleOptions;
+export function Mark({theta, text}: MarkProps) {
+  const {r, trackWidth, center} = useSliderContext();
+  const {showText, color, thickness, length} = useTickMarkContext();
 
   const animatedLineProps = useAnimatedProps(() => {
-    const v1 = vector(theta, r.value - width.value / 2, center.value);
+    const v1 = vector(theta, r.value - trackWidth.value / 2, center.value);
     const v2 = vector(
       theta,
-      r.value - width.value / 2 - (text ? lineLength : lineLength / 2),
+      r.value - trackWidth.value / 2 - (text ? length : length / 2),
       center.value,
     );
 
@@ -44,7 +36,7 @@ export default function ScaleLine({theta, text}: ScaleLine) {
   const animatedTextProps = useAnimatedProps(() => {
     const v = vector(
       theta,
-      r.value - width.value / 2 - lineLength - 10,
+      r.value - trackWidth.value / 2 - length - 10,
       center.value,
     );
 
@@ -59,10 +51,10 @@ export default function ScaleLine({theta, text}: ScaleLine) {
       <AnimatedLine
         animatedProps={animatedLineProps}
         stroke={color}
-        strokeWidth={lineWidth}
+        strokeWidth={thickness}
         strokeLinecap="round"
       />
-      {text && (
+      {showText && (
         <AnimatedText
           animatedProps={animatedTextProps}
           fontSize="10"
