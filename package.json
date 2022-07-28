@@ -1,8 +1,25 @@
 {
   "name": "@zaradev/react-native-circular-slider",
+  "description": "3 types Circular Slider Component for React Native",
   "version": "0.0.1",
-  "private": true,
+  "private": false,
   "license": "MIT",
+  "main": "src/lib/index.tsx",
+  "files": [
+    "src"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com:zaragit/react-native-circular-slider.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zaragit/react-native-circular-slider/issues",
+    "email": "p080931@gmail.com"
+  },
+  "author": {
+    "name": "ZaraDev",
+    "email": "p080931@gmail.com"
+  },
   "scripts": {
     "android": "react-native run-android",
     "ios": "react-native run-ios",
@@ -11,12 +28,14 @@
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-native": "^0.69.0",
-    "react-native-gesture-handler": "^2.5.0",
-    "react-native-reanimated": "^2.9.0",
     "react-native-redash": "^18.0.0",
     "react-native-svg": "^12.4.3"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0",
+    "react-native": "^0.69.0",
+    "react-native-reanimated": "^2.9.0",
+    "react-native-gesture-handler": "^2.5.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -45,5 +64,12 @@
   },
   "resolutions": {
     "@types/react": "^18"
-  }
+  },
+  "keywords": [
+    "react-native",
+    "circular",
+    "slider",
+    "gauge",
+    "progress"
+  ]
 }
