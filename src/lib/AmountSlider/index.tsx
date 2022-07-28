@@ -8,7 +8,7 @@ export interface AmountSliderProps extends SliderOptions {
   amount: number;
   thumbColor?: string;
   filledGaugeColor?: string;
-  onChange: (amount: number) => void;
+  onChange?: (amount: number) => void;
   trackOptions?: TrackOptions;
   tickMarkOptions?: TickMarkOptions;
 }

@@ -1,5 +1,5 @@
 import React, {memo} from 'react';
-import {useAnimatedProps, useDerivedValue} from 'react-native-reanimated';
+import {useAnimatedProps} from 'react-native-reanimated';
 
 import {vector} from '../../utils/worklets';
 import {AnimatedLine, AnimatedText} from './Animated';
