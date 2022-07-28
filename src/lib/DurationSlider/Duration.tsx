@@ -18,15 +18,15 @@ import {GestureContext} from '../../components/Gesture';
 
 export interface DurationProps {
   duration: {start: number; end: number};
-  pointerColor: string;
-  scaleGaugeColor: string;
+  thumbColor: string;
+  filledGaugeColor: string;
   onChange?: (duration: {start: number; end: number}) => void;
 }
 
 export function Duration({
   duration,
-  pointerColor,
-  scaleGaugeColor,
+  thumbColor,
+  filledGaugeColor,
   onChange = () => {},
 }: DurationProps) {
   const {center, clockwise} = useSliderContext();
@@ -78,10 +78,10 @@ export function Duration({
       <FilledGauge
         startTheta={startTheta}
         endTheta={endTheta}
-        color={scaleGaugeColor}
+        color={filledGaugeColor}
       />
-      <Thumb theta={startTheta} color={pointerColor} />
-      <Thumb theta={endTheta} color={pointerColor} />
+      <Thumb theta={startTheta} color={thumbColor} />
+      <Thumb theta={endTheta} color={thumbColor} />
     </Container>
   );
 }

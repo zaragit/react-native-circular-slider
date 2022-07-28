@@ -13,15 +13,15 @@ import {normalize, setClockwise} from '../../utils/worklets';
 
 export interface AmountProps {
   amount: number;
-  pointerColor: string;
-  scaleGaugeColor: string;
+  thumbColor: string;
+  filledGaugeColor: string;
   onChange?: (amount: number) => void;
 }
 
 export function Amount({
   amount,
-  pointerColor,
-  scaleGaugeColor,
+  thumbColor,
+  filledGaugeColor,
   onChange,
 }: AmountProps) {
   const {center, clockwise} = useSliderContext();
@@ -76,11 +76,11 @@ export function Amount({
       onGestureActive={onGestureActive}
       onGestureEnd={onGestureEnd}>
       <FilledGauge
-        color={scaleGaugeColor}
+        color={filledGaugeColor}
         startTheta={zeroTheta}
         endTheta={theta}
       />
-      <Thumb theta={theta} color={pointerColor} />
+      <Thumb theta={theta} color={thumbColor} />
     </Container>
   );
 }

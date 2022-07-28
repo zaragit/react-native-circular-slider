@@ -6,8 +6,8 @@ import {SliderOptions, TickMarkOptions, TrackOptions} from '../../types';
 
 export interface PercentSliderProps extends Pick<SliderOptions, 'size'> {
   percents: number[];
-  pointerColor?: string[];
-  scaleGaugeColor?: string[];
+  thumbColor?: string[];
+  filledGaugeColor?: string[];
   onChange?: (percents: number[]) => void;
   trackOptions?: TrackOptions;
   tickMarkOptions?: Exclude<TickMarkOptions, 'unit' | 'total'>;
@@ -16,8 +16,8 @@ export interface PercentSliderProps extends Pick<SliderOptions, 'size'> {
 export function PercentSlider({
   size,
   percents,
-  pointerColor = Array.from({length: percents.length}).map(_ => '#FFA500'),
-  scaleGaugeColor = Array.from({length: percents.length}).map(_ => '#FFE5B4'),
+  thumbColor = Array.from({length: percents.length}).map(_ => '#FFA500'),
+  filledGaugeColor = Array.from({length: percents.length}).map(_ => '#FFE5B4'),
   onChange,
   trackOptions = {},
   tickMarkOptions = {},
@@ -31,8 +31,8 @@ export function PercentSlider({
       <Percent
         percents={percents}
         onChange={onChange}
-        pointerColor={pointerColor}
-        scaleGaugeColor={scaleGaugeColor}
+        thumbColor={thumbColor}
+        filledGaugeColor={filledGaugeColor}
       />
     </Slider>
   );

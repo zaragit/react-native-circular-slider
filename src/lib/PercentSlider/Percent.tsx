@@ -11,15 +11,15 @@ import {useSliderContext} from '../../context/SliderContext';
 
 export interface PercentProps {
   percents: number[];
-  pointerColor: string[];
-  scaleGaugeColor: string[];
+  thumbColor: string[];
+  filledGaugeColor: string[];
   onChange?: (percents: number[]) => void;
 }
 
 export function Percent({
   percents,
-  pointerColor,
-  scaleGaugeColor,
+  thumbColor,
+  filledGaugeColor,
   onChange = () => {},
 }: PercentProps) {
   const {center} = useSliderContext();
@@ -93,14 +93,14 @@ export function Percent({
             key={index}
             startTheta={prev}
             endTheta={cur}
-            color={scaleGaugeColor[index]}
+            color={filledGaugeColor[index]}
           />,
         );
         return acc;
       }, [] as React.ReactNode[])}
 
       {thetas.map((theta, index) => (
-        <Thumb key={index} theta={theta} color={pointerColor[index]} />
+        <Thumb key={index} theta={theta} color={thumbColor[index]} />
       ))}
     </Container>
   );

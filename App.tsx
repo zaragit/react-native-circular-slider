@@ -22,26 +22,31 @@ export default function App() {
         clockwise={clockwise}
         tickMarkOptions={{show: true, total: 100, unit: 5}}
       />
-      {/* <PercentSlider percents={percents} size={size} onChange={setPercents} />
+      <PercentSlider
+        percents={percents}
+        size={size}
+        onChange={setPercents}
+        tickMarkOptions={{show: true}}
+      />
       <DurationSlider
         size={size}
         duration={duration}
         onChange={setDuration}
         clockwise={clockwise}
         tickMarkOptions={{show: true}}
-      /> */}
-      <View style={{flexDirection: 'row'}}>
+      />
+      {/* <View style={{flexDirection: 'row'}}>
         {[200, 220, 240].map(s => (
           <Button key={s} title={String(s)} onPress={() => setSize(s)} />
         ))}
       </View>
       <View>
         <Button title="clockwise" onPress={() => setClockwise(prev => !prev)} />
-      </View>
+      </View> */}
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {alignItems: 'center', justifyContent: 'center', flex: 1},
+  container: {alignItems: 'center', justifyContent: 'space-evenly', flex: 1},
 });

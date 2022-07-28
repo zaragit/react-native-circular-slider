@@ -6,8 +6,8 @@ import {SliderOptions, TickMarkOptions, TrackOptions} from '../../types';
 
 export interface AmountSliderProps extends SliderOptions {
   amount: number;
-  pointerColor?: string;
-  scaleGaugeColor?: string;
+  thumbColor?: string;
+  filledGaugeColor?: string;
   onChange: (amount: number) => void;
   trackOptions?: TrackOptions;
   tickMarkOptions?: TickMarkOptions;
@@ -16,8 +16,8 @@ export interface AmountSliderProps extends SliderOptions {
 export function AmountSlider({
   size,
   clockwise,
-  pointerColor = '#FFA500',
-  scaleGaugeColor = '#FFE5B4',
+  thumbColor = '#FFA500',
+  filledGaugeColor = '#FFE5B4',
   amount,
   onChange,
   trackOptions = {},
@@ -31,8 +31,8 @@ export function AmountSlider({
       tickMarkOptions={tickMarkOptions}>
       <Amount
         amount={amount}
-        pointerColor={pointerColor}
-        scaleGaugeColor={scaleGaugeColor}
+        thumbColor={thumbColor}
+        filledGaugeColor={filledGaugeColor}
         onChange={onChange}
       />
     </Slider>
