@@ -1,12 +1,12 @@
 import React from 'react';
-import {PI, TAU} from 'react-native-redash';
+import {PI, polar2Canvas, TAU} from 'react-native-redash';
 import {useAnimatedProps, useDerivedValue} from 'react-native-reanimated';
 
 import {Track} from './Track';
 import {AnimatedPath} from './Animated';
 import {SharedNumber} from '../../types';
 import {useSliderContext} from '../../context/SliderContext';
-import {position, thetaBetweenStartAndEnd} from '../../utils/worklets';
+import {thetaBetweenStartAndEnd} from '../../utils/worklets';
 
 export interface FilledGaugeProps {
   color: string;
@@ -17,14 +17,16 @@ export interface FilledGaugeProps {
 export function FilledGauge({color, startTheta, endTheta}: FilledGaugeProps) {
   const {r, center, trackWidth, clockwise} = useSliderContext();
 
-  const startPosition = useDerivedValue(
-    position(startTheta.value, r.value, center.value),
-    [startTheta],
-  );
-  const endPosition = useDerivedValue(
-    position(endTheta.value, r.value, center.value),
-    [endTheta],
-  );
+  const position = (theta: SharedNumber) => {
+    'worklet';
+    return () => {
+      'worklet';
+      return polar2Canvas({theta: theta.value, radius: r.value}, center.value);
+    };
+  };
+
+  const startPosition = useDerivedValue(position(startTheta), [startTheta]);
+  const endPosition = useDerivedValue(position(endTheta), [endTheta]);
 
   const isFullFilled = Math.abs(startTheta.value - endTheta.value) === TAU;
 

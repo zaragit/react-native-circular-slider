@@ -38,6 +38,7 @@ export function Duration({
   const endTheta = useSharedValue(amount2Theta(duration.end, total, clockwise));
 
   const onGestureActive = ({x, y}: Vector, context: GestureContext) => {
+    'worklet';
     const {theta} = canvas2Polar({x, y}, center.value);
 
     if (context.target.value) {
@@ -62,6 +63,7 @@ export function Duration({
   };
 
   const onGestureEnd = ({x, y}: Vector, context: GestureContext) => {
+    'worklet';
     context.target.value = null;
 
     if (onChange) {

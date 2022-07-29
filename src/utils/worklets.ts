@@ -6,14 +6,6 @@ export const normalize = (theta: number) => {
   return rest > 0 ? rest : TAU + rest;
 };
 
-export const position = (theta: number, radius: number, center: Vector) => {
-  'worklet';
-  return () => {
-    'worklet';
-    return polar2Canvas({theta, radius}, center);
-  };
-};
-
 export const setClockwise = (theta: number, clockwise = true) => {
   'worklet';
   return normalize((clockwise ? -theta : theta) + 0.5 * PI);

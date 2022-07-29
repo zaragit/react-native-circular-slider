@@ -1,7 +1,7 @@
 {
   "name": "@zaradev/react-native-circular-slider",
   "description": "3 types Circular Slider Component for React Native",
-  "version": "0.0.5",
+  "version": "0.0.9",
   "private": false,
   "license": "MIT",
   "main": "lib/commonjs/index.js",
@@ -35,19 +35,19 @@
     "prepare": "bob build"
   },
   "dependencies": {
-    "react": "^18.2.0",
-    "react-native": "^0.69.3",
-    "react-native-gesture-handler": "^2.5.0",
-    "react-native-reanimated": "^2.9.0",
     "react-native-redash": "^18.0.0",
     "react-native-svg": "^12.4.3"
   },
   "peerDependencies": {
-    "react": "^18.2.0",
-    "react-native": "^0.69.0"
+    "react": "*",
+    "react-native": "*",
+    "react-native-gesture-handler": "^2.5.0",
+    "react-native-reanimated": "^2.9.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
+    "@babel/preset-env": "^7.18.9",
+    "@babel/preset-typescript": "^7.18.6",
     "@babel/runtime": "^7.12.5",
     "@react-native-community/eslint-config": "^2.0.0",
     "@testing-library/jest-native": "^4.0.5",
@@ -66,8 +66,12 @@
     "eslint": "^7.32.0",
     "jest": "^28.1.3",
     "metro-react-native-babel-preset": "^0.70.3",
+    "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-native": "^0.69.3",
     "react-native-builder-bob": "^0.18.3",
+    "react-native-gesture-handler": "^2.5.0",
+    "react-native-reanimated": "^2.9.0",
     "react-test-renderer": "^18.2.0",
     "ts-jest": "^28.0.7",
     "typescript": "^4.4.4"
@@ -84,7 +88,7 @@
   ],
   "react-native": "src/index.tsx",
   "module": "lib/module/index.js",
-  "types": "lib/typescript/src/index.d.ts",
+  "types": "lib/typescript/index.d.ts",
   "react-native-builder-bob": {
     "source": "src",
     "output": "lib",

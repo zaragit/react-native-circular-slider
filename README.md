@@ -22,6 +22,11 @@ or
 yarn add @zaradev/react-native-circular-slider
 ```
 
+### Peer Dependencies
+
+- **react-natie-reanimated(v2)**
+- **react-native-gesture-handler**
+
 <br/>
 
 ## Example
@@ -130,15 +135,6 @@ return (
 | showText  | If you need to render Tick Mark units | String  |    ❌    | show option value |   ✅   |   ✅    |    ✅    |
 | textSize  | size of text                          | Number  |    ❌    |        10         |   ✅   |   ✅    |    ✅    |
 | textColor | color of text                         | Number  |    ❌    |      #191919      |   ✅   |   ✅    |    ✅    |
-
-<br/>
-
-## Dependencies
-
-- **react-natie-reanimated(v2)**
-- **react-native-gesture-handler**
-- react-native-redash
-- react-native-svg
 
 <br/>
 

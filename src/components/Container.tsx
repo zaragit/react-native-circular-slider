@@ -28,6 +28,7 @@ export function Container({
   const target = useSharedValue<GestureThumbs | null>(null);
 
   const onGestureStart = ({x, y}: Vector, context: GestureContext) => {
+    'worklet';
     const {theta} = canvas2Polar({x, y}, center.value);
     context.offset = theta;
     context.target = target;

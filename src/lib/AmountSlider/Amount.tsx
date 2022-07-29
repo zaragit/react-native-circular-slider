@@ -31,6 +31,7 @@ export function Amount({
   const theta = useSharedValue(amount2Theta(amount, total, clockwise));
 
   const onGestureActive = ({x, y}: Vector, context: GestureContext) => {
+    'worklet';
     if (context.target.value?.curr) {
       const {theta: newTheta} = canvas2Polar({x, y}, center.value);
       const delta = newTheta - context.offset;
@@ -40,6 +41,7 @@ export function Amount({
   };
 
   const onGestureEnd = ({x, y}: Vector, context: GestureContext) => {
+    'worklet';
     context.target.value = null;
 
     if (onChange) {

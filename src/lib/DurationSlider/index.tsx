@@ -8,7 +8,7 @@ export interface DurationSliderProps extends SliderOptions {
   duration: {start: number; end: number};
   thumbColor?: string;
   filledGaugeColor?: string;
-  onChange: (duration: {start: number; end: number}) => void;
+  onChange?: (duration: {start: number; end: number}) => void;
   trackOptions?: TrackOptions;
   tickMarkOptions?: TickMarkOptions;
 }
