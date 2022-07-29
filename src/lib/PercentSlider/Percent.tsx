@@ -1,12 +1,17 @@
-import React, {useCallback} from 'react';
+import React from 'react';
+import {canvas2Polar, Vector} from 'react-native-redash';
 import {runOnJS, useSharedValue} from 'react-native-reanimated';
-import {canvas2Polar, PI, TAU, Vector} from 'react-native-redash';
 
 import {SharedNumber} from '../../types';
 import {Container} from '../../components/Container';
 import {GestureContext} from '../../components/Gesture';
 import {FilledGauge, Thumb} from '../../components/svg';
-import {moveable, normalize} from '../../utils/worklets';
+import {
+  moveable,
+  normalize,
+  percent2Theta,
+  theta2Percent,
+} from '../../utils/worklets';
 import {useSliderContext} from '../../context/SliderContext';
 
 export interface PercentProps {
@@ -20,21 +25,9 @@ export function Percent({
   percents,
   thumbColor,
   filledGaugeColor,
-  onChange = () => {},
+  onChange,
 }: PercentProps) {
   const {center} = useSliderContext();
-
-  const percent2Theta = useCallback((percent: number, distance = 0) => {
-    'worklet';
-    const theta = TAU * (percent / 100);
-    return theta + distance;
-  }, []);
-
-  const theta2Percent = useCallback((theta: number, start = 0) => {
-    'worklet';
-    const degrees = normalize(theta - start) * (180 / PI);
-    return (degrees / 360) * 100;
-  }, []);
 
   const thetas = percents.reduce(
     (acc, cur, index) => [
@@ -70,15 +63,18 @@ export function Percent({
     }
   };
 
-  const onGestureEnd = () => {
+  const onGestureEnd = ({x, y}: Vector, context: GestureContext) => {
     'worklet';
-    runOnJS(onChange)(
-      thetas.reduce((acc, cur, index, arr) => {
-        const prev = arr[index - 1] || arr[arr.length - 1];
-        acc.push(theta2Percent(cur.value, prev.value));
-        return acc;
-      }, [] as number[]),
-    );
+    context.target.value = null;
+    if (onChange) {
+      runOnJS(onChange)(
+        thetas.reduce((acc, cur, index, arr) => {
+          const prev = arr[index - 1] || arr[arr.length - 1];
+          acc.push(theta2Percent(cur.value, prev.value));
+          return acc;
+        }, [] as number[]),
+      );
+    }
   };
 
   return (

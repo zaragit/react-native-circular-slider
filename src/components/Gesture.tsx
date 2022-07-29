@@ -24,7 +24,7 @@ export interface GestureProps {
   children?: React.ReactNode;
 }
 
-export default function RGesture({
+export default function Gesture({
   onStart,
   onActive,
   onEnd,

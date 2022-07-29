@@ -1,11 +1,11 @@
-import React, {useCallback} from 'react';
+import React from 'react';
 import {useSharedValue} from 'react-native-reanimated';
 import {canvas2Polar, Vector} from 'react-native-redash';
 
 import CursorOverlay from './CursorOverlay';
 import {GestureThumbs, SharedNumber} from '../types';
 import {Canvas, TickMark, Track} from '../components/svg';
-import RGesture, {GestureContext} from '../components/Gesture';
+import Gesture, {GestureContext} from '../components/Gesture';
 import {useSliderContext, useTickMarkContext} from '../context/SliderContext';
 
 export interface ContainerProps {
@@ -27,27 +27,11 @@ export function Container({
 
   const target = useSharedValue<GestureThumbs | null>(null);
 
-  const onGestureStart = useCallback(
-    ({x, y}: Vector, context: GestureContext) => {
-      'worklet';
-      const {theta} = canvas2Polar({x, y}, center.value);
-      context.offset = theta;
-      context.target = target;
-    },
-    [center.value, target],
-  );
-
-  const _onGestureEnd = useCallback(
-    (vector: Vector, context: GestureContext) => {
-      'worklet';
-      target.value = null;
-
-      if (onGestureEnd) {
-        onGestureEnd(vector, context);
-      }
-    },
-    [onGestureEnd, target],
-  );
+  const onGestureStart = ({x, y}: Vector, context: GestureContext) => {
+    const {theta} = canvas2Polar({x, y}, center.value);
+    context.offset = theta;
+    context.target = target;
+  };
 
   return (
     <>
@@ -71,10 +55,10 @@ export function Container({
         )}
         {children}
       </Canvas>
-      <RGesture
+      <Gesture
         onStart={onGestureStart}
         onActive={onGestureActive}
-        onEnd={_onGestureEnd}>
+        onEnd={onGestureEnd}>
         {thetas.reduce((acc, curr, index, arr) => {
           const prev = arr[index - 1] || arr[arr.length - 1];
           const next = arr[index + 1] || arr[0];
@@ -94,7 +78,7 @@ export function Container({
           );
           return acc;
         }, [] as React.ReactNode[])}
-      </RGesture>
+      </Gesture>
     </>
   );
 }

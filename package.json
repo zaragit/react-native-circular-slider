@@ -1,12 +1,18 @@
 {
   "name": "@zaradev/react-native-circular-slider",
   "description": "3 types Circular Slider Component for React Native",
-  "version": "0.0.1",
+  "version": "0.0.5",
   "private": false,
   "license": "MIT",
-  "main": "src/lib/index.tsx",
+  "main": "lib/commonjs/index.js",
   "files": [
-    "src"
+    "src",
+    "lib",
+    "!**/__tests__",
+    "!**/__fixtures__",
+    "!**/__mocks__",
+    "src/lib",
+    "dist"
   ],
   "repository": {
     "type": "git",
@@ -25,17 +31,20 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest --watchAll",
-    "lint": "eslint . --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
+    "prepare": "bob build"
   },
   "dependencies": {
+    "react": "^18.2.0",
+    "react-native": "^0.69.3",
+    "react-native-gesture-handler": "^2.5.0",
+    "react-native-reanimated": "^2.9.0",
     "react-native-redash": "^18.0.0",
     "react-native-svg": "^12.4.3"
   },
   "peerDependencies": {
     "react": "^18.2.0",
-    "react-native": "^0.69.0",
-    "react-native-reanimated": "^2.9.0",
-    "react-native-gesture-handler": "^2.5.0"
+    "react-native": "^0.69.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -58,6 +67,7 @@
     "jest": "^28.1.3",
     "metro-react-native-babel-preset": "^0.70.3",
     "react-dom": "^18.2.0",
+    "react-native-builder-bob": "^0.18.3",
     "react-test-renderer": "^18.2.0",
     "ts-jest": "^28.0.7",
     "typescript": "^4.4.4"
@@ -71,5 +81,23 @@
     "slider",
     "gauge",
     "progress"
+  ],
+  "react-native": "src/index.tsx",
+  "module": "lib/module/index.js",
+  "types": "lib/typescript/src/index.d.ts",
+  "react-native-builder-bob": {
+    "source": "src",
+    "output": "lib",
+    "targets": [
+      "commonjs",
+      "module",
+      "typescript"
+    ]
+  },
+  "eslintIgnore": [
+    "node_modules/",
+    "dist/",
+    "lib/",
+    "Example"
   ]
 }

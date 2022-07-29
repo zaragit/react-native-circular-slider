@@ -1,52 +1,25 @@
 import React, {useState} from 'react';
-import {Button, SafeAreaView, StyleSheet, View} from 'react-native';
-
-import {AmountSlider, DurationSlider, PercentSlider} from './src/lib';
+import {StyleSheet, Text, View} from 'react-native';
+import {PercentSlider} from './src';
 
 export default function App() {
-  const [size, setSize] = useState(200);
-  const [amount, setAmount] = useState(25);
-  const [percents, setPercents] = useState([40, 30, 20, 10]);
-  const [duration, setDuration] = useState({
-    start: 10,
-    end: 50,
-  });
-  const [clockwise, setClockwise] = useState(true);
+  const [amount, setAmount] = useState(30);
+  const [percents, setPercents] = useState([30, 20, 50]);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <AmountSlider
-        size={size}
-        amount={amount}
-        onChange={setAmount}
-        clockwise={clockwise}
-        tickMarkOptions={{show: true, total: 100, unit: 5}}
-      />
-      <PercentSlider
-        percents={percents}
-        size={size}
-        onChange={setPercents}
-        tickMarkOptions={{show: true}}
-      />
-      <DurationSlider
-        size={size}
-        duration={duration}
-        onChange={setDuration}
-        clockwise={clockwise}
-        tickMarkOptions={{show: true}}
-      />
-      {/* <View style={{flexDirection: 'row'}}>
-        {[200, 220, 240].map(s => (
-          <Button key={s} title={String(s)} onPress={() => setSize(s)} />
-        ))}
-      </View>
-      <View>
-        <Button title="clockwise" onPress={() => setClockwise(prev => !prev)} />
-      </View> */}
-    </SafeAreaView>
+    <View style={styles.container}>
+      <Text>Open up App.tsx to start working on your app!</Text>
+      {/* <AmountSlider size={300} amount={amount} onChange={setAmount} /> */}
+      <PercentSlider size={300} percents={percents} />
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {alignItems: 'center', justifyContent: 'space-evenly', flex: 1},
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 });
