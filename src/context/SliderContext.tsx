@@ -5,6 +5,7 @@ import {
   SharedNumber,
   SharedVector,
   SliderOptions,
+  ThumbOptions,
   TickMarkOptions,
   TrackOptions,
 } from '../types';
@@ -17,6 +18,7 @@ interface SliderContext {
   trackColor: string;
   clockwise: boolean;
   tickMarkOptions: Required<TickMarkOptions>;
+  thumbOptions: Required<ThumbOptions>;
 }
 
 const SliderContext = createContext<SliderContext | null>(null);
@@ -25,6 +27,7 @@ export interface SliderContextProviderProps {
   sliderOptions: Required<SliderOptions>;
   trackOptions: Required<TrackOptions>;
   tickMarkOptions: Required<TickMarkOptions>;
+  thumbOptions: Required<ThumbOptions>;
   children?: React.ReactNode;
 }
 
@@ -32,6 +35,7 @@ export default function SliderContextProvider({
   sliderOptions,
   trackOptions,
   tickMarkOptions,
+  thumbOptions,
   children,
 }: SliderContextProviderProps) {
   const {size, clockwise} = sliderOptions;
@@ -60,6 +64,7 @@ export default function SliderContextProvider({
         trackWidth: derivedTrackWidth,
         trackColor: color,
         tickMarkOptions,
+        thumbOptions,
       }}>
       {children}
     </SliderContext.Provider>
@@ -77,4 +82,9 @@ export function useSliderContext() {
 export function useTickMarkContext() {
   const context = useSliderContext();
   return context.tickMarkOptions;
+}
+
+export function useThumbContext() {
+  const context = useSliderContext();
+  return context.thumbOptions;
 }

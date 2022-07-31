@@ -10,6 +10,7 @@ import {
 } from '../../utils/worklets';
 import {
   useSliderContext,
+  useThumbContext,
   useTickMarkContext,
 } from '../../context/SliderContext';
 import {Container} from '../../components/Container';
@@ -18,19 +19,14 @@ import {GestureContext} from '../../components/Gesture';
 
 export interface DurationProps {
   duration: {start: number; end: number};
-  thumbColor: string;
-  filledGaugeColor: string;
+  filledColor: string;
   onChange?: (duration: {start: number; end: number}) => void;
 }
 
-export function Duration({
-  duration,
-  thumbColor,
-  filledGaugeColor,
-  onChange,
-}: DurationProps) {
+export function Duration({duration, filledColor, onChange}: DurationProps) {
   const {center, clockwise} = useSliderContext();
   const {total} = useTickMarkContext();
+  const {colors} = useThumbContext();
 
   const startTheta = useSharedValue(
     amount2Theta(duration.start, total, clockwise),
@@ -82,10 +78,10 @@ export function Duration({
       <FilledGauge
         startTheta={startTheta}
         endTheta={endTheta}
-        color={filledGaugeColor}
+        color={filledColor}
       />
-      <Thumb theta={startTheta} color={thumbColor} />
-      <Thumb theta={endTheta} color={thumbColor} />
+      <Thumb theta={startTheta} color={colors[0]} />
+      <Thumb theta={endTheta} color={colors[1]} />
     </Container>
   );
 }

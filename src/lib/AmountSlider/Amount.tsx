@@ -14,14 +14,14 @@ import {amount2Theta, normalize, theta2Amount} from '../../utils/worklets';
 export interface AmountProps {
   amount: number;
   thumbColor: string;
-  filledGaugeColor: string;
+  filledColor: string;
   onChange?: (amount: number) => void;
 }
 
 export function Amount({
   amount,
   thumbColor,
-  filledGaugeColor,
+  filledColor,
   onChange,
 }: AmountProps) {
   const {center, clockwise} = useSliderContext();
@@ -55,7 +55,7 @@ export function Amount({
       onGestureActive={onGestureActive}
       onGestureEnd={onGestureEnd}>
       <FilledGauge
-        color={filledGaugeColor}
+        color={filledColor}
         startTheta={zeroTheta}
         endTheta={theta}
       />

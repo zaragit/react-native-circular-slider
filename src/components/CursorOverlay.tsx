@@ -12,9 +12,10 @@ import {useSliderContext} from '../context/SliderContext';
 interface CursorOverlayProps {
   theta: SharedNumber;
   onPressIn?: () => void;
+  children?: React.ReactNode;
 }
 
-const CursorOverlay = ({theta, onPressIn}: CursorOverlayProps) => {
+const CursorOverlay = ({theta, onPressIn, children}: CursorOverlayProps) => {
   const {r, center, trackWidth} = useSliderContext();
 
   const position = useDerivedValue(() =>
@@ -27,6 +28,7 @@ const CursorOverlay = ({theta, onPressIn}: CursorOverlayProps) => {
     return {
       width: trackWidth.value,
       height: trackWidth.value,
+      borderRadius: trackWidth.value / 2,
       transform: [
         {translateX: x - trackWidth.value / 2},
         {translateY: y - trackWidth.value / 2},
@@ -36,7 +38,9 @@ const CursorOverlay = ({theta, onPressIn}: CursorOverlayProps) => {
 
   return (
     <Pressable onPressIn={onPressIn}>
-      <Animated.View style={[styles.container, animatedStyle]} />
+      <Animated.View style={[styles.container, animatedStyle]}>
+        {children}
+      </Animated.View>
     </Pressable>
   );
 };
@@ -49,6 +53,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    overflow: 'hidden',
   },
 });
 

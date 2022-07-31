@@ -12,22 +12,17 @@ import {
   percent2Theta,
   theta2Percent,
 } from '../../utils/worklets';
-import {useSliderContext} from '../../context/SliderContext';
+import {useSliderContext, useThumbContext} from '../../context/SliderContext';
 
 export interface PercentProps {
   percents: number[];
-  thumbColor: string[];
-  filledGaugeColor: string[];
+  filledColor: string[];
   onChange?: (percents: number[]) => void;
 }
 
-export function Percent({
-  percents,
-  thumbColor,
-  filledGaugeColor,
-  onChange,
-}: PercentProps) {
+export function Percent({percents, filledColor, onChange}: PercentProps) {
   const {center} = useSliderContext();
+  const {colors} = useThumbContext();
 
   const thetas = percents.reduce(
     (acc, cur, index) => [
@@ -89,14 +84,14 @@ export function Percent({
             key={index}
             startTheta={prev}
             endTheta={cur}
-            color={filledGaugeColor[index]}
+            color={filledColor[index]}
           />,
         );
         return acc;
       }, [] as React.ReactNode[])}
 
       {thetas.map((theta, index) => (
-        <Thumb key={index} theta={theta} color={thumbColor[index]} />
+        <Thumb key={index} theta={theta} color={colors[index]} />
       ))}
     </Container>
   );

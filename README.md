@@ -83,30 +83,33 @@ return (
 
 ### Amount
 
-| Name             | Description                             | Type                     | Required | Default |
-| ---------------- | --------------------------------------- | ------------------------ | :------: | :-----: |
-| amount           |                                         | number                   |    ✅    |         |
-| thumbColor       | color of thumb                          | string                   |    ❌    | #FFA500 |
-| filledGaugeColor | color of filled gauge                   | string                   |    ❌    | #FFE5B4 |
-| onChange         | called when the amount value is changed | function(amount: number) |    ❌    |         |
+| Name        | Description                                               | Type                     | Required | Default |
+| ----------- | --------------------------------------------------------- | ------------------------ | :------: | :-----: |
+| amount      |                                                           | number                   |    ✅    |         |
+| thumbColor  | color of thumb                                            | string                   |    ❌    | #FFA500 |
+| thumbIcon   | Icon component to be displayed in the center of the thumb | ReactNode                |    ❌    |         |
+| filledColor | color of filled gauge                                     | string                   |    ❌    | #FFE5B4 |
+| onChange    | called when the amount value is changed                   | function(amount: number) |    ❌    |         |
 
 ### Percent
 
-| Name             | Description                                | Type                         | Required | Default |
-| ---------------- | ------------------------------------------ | ---------------------------- | :------: | :-----: |
-| percents         |                                            | number[]                     |    ✅    |         |
-| thumbColor       | color of thumb                             | string[]                     |    ❌    | #FFA500 |
-| filledGaugeColor | color of filled gauge                      | string[]                     |    ❌    | #FFE5B4 |
-| onChange         | Called when the percents value is changed. | function(percents: number[]) |    ❌    |         |
+| Name        | Description                                               | Type                         | Required | Default |
+| ----------- | --------------------------------------------------------- | ---------------------------- | :------: | :-----: |
+| percents    |                                                           | number[]                     |    ✅    |         |
+| thumbColor  | color of thumb                                            | string[]                     |    ❌    | #FFA500 |
+| thumbIcon   | Icon component to be displayed in the center of the thumb | ReactNode[]                  |    ❌    |         |
+| filledColor | color of filled gauge                                     | string[]                     |    ❌    | #FFE5B4 |
+| onChange    | Called when the percents value is changed                 | function(percents: number[]) |    ❌    |         |
 
 ### Duration
 
-| Name             | Description                                | Type                                              | Required | Default |
-| ---------------- | ------------------------------------------ | ------------------------------------------------- | :------: | :-----: |
-| duration         |                                            | {start: number; end: number;}                     |    ✅    |         |
-| thumbColor       | color of thumb                             | string                                            |    ❌    | #FFA500 |
-| filledGaugeColor | color of filled gauge                      | string                                            |    ❌    | #FFE5B4 |
-| onChange         | Called when the duration value is changed. | function(duration: {start: number; end: number;}) |    ❌    |         |
+| Name        | Description                                               | Type                                              | Required | Default |
+| ----------- | --------------------------------------------------------- | ------------------------------------------------- | :------: | :-----: |
+| duration    |                                                           | {start: number; end: number;}                     |    ✅    |         |
+| thumbColor  | color of thumb                                            | string                                            |    ❌    | #FFA500 |
+| thumbIcon   | Icon component to be displayed in the center of the thumb | {start: ReactNode, end: ReactNode}                |    ❌    |         |
+| filledColor | color of filled gauge                                     | string                                            |    ❌    | #FFE5B4 |
+| onChange    | Called when the duration value is changed                 | function(duration: {start: number; end: number;}) |    ❌    |         |
 
 ### Common
 

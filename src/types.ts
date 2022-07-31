@@ -1,5 +1,6 @@
 import {Vector} from 'react-native-redash';
 import {SharedValue} from 'react-native-reanimated';
+import React from 'react';
 
 export type RequiredPick<T, K extends keyof T> = T & Required<Pick<T, K>>;
 
@@ -18,7 +19,10 @@ export type SliderOptions = {
   clockwise?: boolean;
 };
 
-export type ThumbOptions = {};
+export type ThumbOptions = {
+  colors?: string[];
+  icons?: React.ReactNode[];
+};
 
 export type TrackOptions = {
   width?: number;

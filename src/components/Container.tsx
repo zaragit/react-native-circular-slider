@@ -6,7 +6,11 @@ import CursorOverlay from './CursorOverlay';
 import {GestureThumbs, SharedNumber} from '../types';
 import {Canvas, TickMark, Track} from '../components/svg';
 import Gesture, {GestureContext} from '../components/Gesture';
-import {useSliderContext, useTickMarkContext} from '../context/SliderContext';
+import {
+  useSliderContext,
+  useThumbContext,
+  useTickMarkContext,
+} from '../context/SliderContext';
 
 export interface ContainerProps {
   thetas: SharedNumber[];
@@ -24,6 +28,7 @@ export function Container({
   const {size, r, center, clockwise, trackWidth} = useSliderContext();
   const {show, total, unit, color, showText, thickness, length} =
     useTickMarkContext();
+  const {icons} = useThumbContext();
 
   const target = useSharedValue<GestureThumbs | null>(null);
 
@@ -74,8 +79,9 @@ export function Container({
                   curr,
                   next,
                 })
-              }
-            />,
+              }>
+              {icons[index]}
+            </CursorOverlay>,
           );
           return acc;
         }, [] as React.ReactNode[])}

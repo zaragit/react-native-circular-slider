@@ -7,8 +7,9 @@ import {SliderOptions, TickMarkOptions, TrackOptions} from '../../types';
 export interface AmountSliderProps extends SliderOptions {
   amount: number;
   thumbColor?: string;
-  filledGaugeColor?: string;
+  filledColor?: string;
   onChange?: (amount: number) => void;
+  thumbIcon?: React.ReactNode;
   trackOptions?: TrackOptions;
   tickMarkOptions?: TickMarkOptions;
 }
@@ -17,9 +18,10 @@ export function AmountSlider({
   size,
   clockwise,
   thumbColor = '#FFA500',
-  filledGaugeColor = '#FFE5B4',
+  filledColor = '#FFE5B4',
   amount,
   onChange,
+  thumbIcon,
   trackOptions = {},
   tickMarkOptions = {},
 }: AmountSliderProps) {
@@ -28,11 +30,12 @@ export function AmountSlider({
       size={size}
       clockwise={clockwise}
       trackOptions={trackOptions}
-      tickMarkOptions={tickMarkOptions}>
+      tickMarkOptions={tickMarkOptions}
+      thumbOptions={{colors: ['#FFA500'], icons: [thumbIcon]}}>
       <Amount
         amount={amount}
         thumbColor={thumbColor}
-        filledGaugeColor={filledGaugeColor}
+        filledColor={filledColor}
         onChange={onChange}
       />
     </Slider>

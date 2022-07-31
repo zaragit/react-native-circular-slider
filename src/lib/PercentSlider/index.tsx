@@ -7,7 +7,8 @@ import {SliderOptions, TickMarkOptions, TrackOptions} from '../../types';
 export interface PercentSliderProps extends Pick<SliderOptions, 'size'> {
   percents: number[];
   thumbColor?: string[];
-  filledGaugeColor?: string[];
+  thumbIcon?: React.ReactNode[];
+  filledColor?: string[];
   onChange?: (percents: number[]) => void;
   trackOptions?: TrackOptions;
   tickMarkOptions?: Exclude<TickMarkOptions, 'unit' | 'total'>;
@@ -16,8 +17,9 @@ export interface PercentSliderProps extends Pick<SliderOptions, 'size'> {
 export function PercentSlider({
   size,
   percents,
-  thumbColor = Array.from({length: percents.length}).map(_ => '#FFA500'),
-  filledGaugeColor = Array.from({length: percents.length}).map(_ => '#FFE5B4'),
+  thumbColor = new Array(percents.length).fill('#FFA500'),
+  thumbIcon = new Array(percents.length).fill(null),
+  filledColor = new Array(percents.length).fill('#FFE5B4'),
   onChange,
   trackOptions = {},
   tickMarkOptions = {},
@@ -27,12 +29,12 @@ export function PercentSlider({
       size={size}
       clockwise={true}
       trackOptions={trackOptions}
-      tickMarkOptions={tickMarkOptions}>
+      tickMarkOptions={tickMarkOptions}
+      thumbOptions={{colors: thumbColor, icons: thumbIcon}}>
       <Percent
         percents={percents}
         onChange={onChange}
-        thumbColor={thumbColor}
-        filledGaugeColor={filledGaugeColor}
+        filledColor={filledColor}
       />
     </Slider>
   );

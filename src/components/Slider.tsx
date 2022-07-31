@@ -1,12 +1,18 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 
-import {SliderOptions, TickMarkOptions, TrackOptions} from '../types';
+import {
+  SliderOptions,
+  ThumbOptions,
+  TickMarkOptions,
+  TrackOptions,
+} from '../types';
 import SliderContextProvider from '../context/SliderContext';
 
 export interface GaugeProps extends SliderOptions {
   trackOptions: TrackOptions;
   tickMarkOptions: TickMarkOptions;
+  thumbOptions: Required<ThumbOptions>;
   children?: React.ReactNode;
 }
 
@@ -15,6 +21,7 @@ export default function Slider({
   clockwise,
   trackOptions,
   tickMarkOptions,
+  thumbOptions,
   children,
 }: GaugeProps) {
   const {width = size * 0.1, color = '#7F8487'} = trackOptions;
@@ -44,7 +51,8 @@ export default function Slider({
         showText,
         textSize,
         textColor,
-      }}>
+      }}
+      thumbOptions={thumbOptions}>
       <View style={[styles.container, {width: size, height: size}]}>
         {children}
       </View>

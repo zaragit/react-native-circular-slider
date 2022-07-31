@@ -6,8 +6,9 @@ import {SliderOptions, TickMarkOptions, TrackOptions} from '../../types';
 
 export interface DurationSliderProps extends SliderOptions {
   duration: {start: number; end: number};
-  thumbColor?: string;
-  filledGaugeColor?: string;
+  thumbColor?: {start: string; end: string};
+  thumbIcon?: {start: React.ReactNode; end: React.ReactNode};
+  filledColor?: string;
   onChange?: (duration: {start: number; end: number}) => void;
   trackOptions?: TrackOptions;
   tickMarkOptions?: TickMarkOptions;
@@ -17,8 +18,9 @@ export function DurationSlider({
   size,
   clockwise,
   duration,
-  thumbColor = '#FFA500',
-  filledGaugeColor = '#FFE5B4',
+  thumbColor = {start: '#FFA500', end: '#FFA500'},
+  thumbIcon = {start: null, end: null},
+  filledColor = '#FFE5B4',
   onChange,
   trackOptions = {},
   tickMarkOptions = {},
@@ -28,12 +30,15 @@ export function DurationSlider({
       size={size}
       clockwise={clockwise}
       trackOptions={trackOptions}
-      tickMarkOptions={tickMarkOptions}>
+      tickMarkOptions={tickMarkOptions}
+      thumbOptions={{
+        colors: [thumbColor.start, thumbColor.end],
+        icons: [thumbIcon.start, thumbIcon.end],
+      }}>
       <Duration
         duration={duration}
         onChange={onChange}
-        thumbColor={thumbColor}
-        filledGaugeColor={filledGaugeColor}
+        filledColor={filledColor}
       />
     </Slider>
   );
